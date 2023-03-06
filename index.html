@@ -35,10 +35,10 @@
 
       <div
               class="color-box"
-              v-for="variant in variants"
+              v-for="(variant, index) in variants"
               :key="variant.variantId"
               :style="{backgroundColor:variant.variantColor}"
-              @mouseover="updateProduct(variant.variantImage)"
+              @mouseover="updateProduct(index)"
       >
       </div>
 
@@ -47,7 +47,7 @@
       </div>
 
       <div class="onSale">
-        <span v-show="onSale">SALE!</span>
+        <span>{{sale}}</span>
       </div>
 
       <div class="link">
