@@ -1,3 +1,5 @@
+let eventBus = new Vue()
+
 Vue.component('product', {
     props: {
         premium: {
@@ -5,6 +7,8 @@ Vue.component('product', {
             required: true
         }
     },
+
+
 
     template: `
    <div class="product">
@@ -129,6 +133,7 @@ Vue.component('product', {
             this.selectedVariant = index
             // как кубикам присвоено 0 и 1, от куда это?
         }
+
     },
     computed: {
         title() {
@@ -152,8 +157,14 @@ Vue.component('product', {
                 return 2.99
             }
         }
+
         // как понять что является вычисляемым свойством, а что методоми?
-    }
+    },
+    mounted() {
+        eventBus.$on('review-submitted', productReview => {
+            this.reviews.push(productReview)
+        })
+    },
 })
 Vue.component('product-details', {
     template: `
@@ -236,7 +247,7 @@ Vue.component('product-review', {
                     rating: this.rating,
                     liking: this.liking
                 }
-                this.$emit('review-submitted', productReview)
+                eventBus.$emit('review-submitted', productReview)
                 this.name = null
                 this.review = null
                 this.rating = null
@@ -280,7 +291,7 @@ Vue.component('product-tabs', {
          </ul>
        </div>
        <div v-show="selectedTab === 'Make a Review'">
-         <product-review @review-submitted="addReview"></product-review>
+         <product-review></product-review>
        </div>
      </div>
 `,
@@ -292,9 +303,6 @@ Vue.component('product-tabs', {
         }
     },
     methods: {
-        addReview(productReview) {
-            this.reviews.push(productReview)
-        }
     }
 })
 
