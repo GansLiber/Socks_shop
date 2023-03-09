@@ -12,7 +12,12 @@ Vue.component('product', {
    <div class="product">
         <div id="axis" class="one">
             <img :src="image" :alt="altText" class="img van duplicate">
-            <img :src="image" :alt="altText" :class="{ moveRight:animate }" id="img" class="img van">
+            <img :src="image" 
+                 :alt="altText" 
+                 :class="{ moveRight:animate }"
+                 @animationend="animationEnd"
+                 id="img" 
+                 class="img van">
         </div>
 
     <div class="product-info">
@@ -104,21 +109,11 @@ Vue.component('product', {
         }
     },
     methods: {
-        // animImg(){
-        //     let img = document.getElementById('img');
-        //     let img_duplicate = document.getElementById('duplicate');
-        //     let imgCoords = img.getBoundingClientRect();
-        //
-        //     img_duplicate.style.left = imgCoords.left + 'px';
-        //     img_duplicate.style.right = imgCoords.right + 'px';
-        //     img_duplicate.style.visibility = 'visible';
-        //     img_duplicate.classList.add('anim');
-        //
-        //     setTimeout(this.nullStyles, 1000,img_duplicate, imgCoords);
-        //     setTimeout(this.nullStyles, 1000,img_duplicate, imgCoords);
-        // },
         animationImg(value) {
             return this.animate = value
+        },
+        animationEnd(){
+            this.animationImg(false)
         },
         addToCart() {
             this.animationImg(true)
@@ -126,12 +121,6 @@ Vue.component('product', {
                 this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             }
             console.log(this.animate)
-
-            setTimeout(() => {
-                console.log(this.animate)
-                this.animationImg(false)
-            }, 1000)
-
         },
         lessToCart() {
             if (this.cart < this.inventory) {

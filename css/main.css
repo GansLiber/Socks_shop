@@ -48,19 +48,17 @@ img {
     margin-bottom: 15px;
 }
 
-@keyframes move {
+@keyframes moveRightAnimation  {
     from {
-        top: 0;
+        transform: none;
     }
     to {
-        left: 600px;
-        bottom: 300px;
+        transform: translate(1350px, -420px) rotate(100deg) scale(-0);
     }
 }
 
 .moveRight{
-    transform: translate(1350px,-420px) rotate(100deg) scale(-0);
-    animation-delay: 1s;
+    animation: moveRightAnimation ease-out 1s 1;
 }
 
 .product-info {
@@ -89,10 +87,6 @@ button {
     height: 40px;
     width: 100px;
     font-size: 14px;
-}
-
-.butt-add{
-    /*background-color: red;*/
 }
 
 .disabledButton {
