@@ -11,7 +11,8 @@ Vue.component('product', {
     template: `
    <div class="product">
         <div id="axis" class="one">
-            <img :src="image" :alt="altText" :class="{ moveRight:animate }" class="img van">
+            <img :src="image" :alt="altText" class="img van duplicate">
+            <img :src="image" :alt="altText" :class="{ moveRight:animate }" id="img" class="img van">
         </div>
 
     <div class="product-info">
@@ -55,7 +56,6 @@ Vue.component('product', {
                 @click="addToCart"
                 :disabled="!inStock"
                 :class="{ disabledButton: !inStock }"
-                
         >
           Add
         </button>
@@ -104,6 +104,19 @@ Vue.component('product', {
         }
     },
     methods: {
+        // animImg(){
+        //     let img = document.getElementById('img');
+        //     let img_duplicate = document.getElementById('duplicate');
+        //     let imgCoords = img.getBoundingClientRect();
+        //
+        //     img_duplicate.style.left = imgCoords.left + 'px';
+        //     img_duplicate.style.right = imgCoords.right + 'px';
+        //     img_duplicate.style.visibility = 'visible';
+        //     img_duplicate.classList.add('anim');
+        //
+        //     setTimeout(this.nullStyles, 1000,img_duplicate, imgCoords);
+        //     setTimeout(this.nullStyles, 1000,img_duplicate, imgCoords);
+        // },
         animationImg(value) {
             return this.animate = value
         },
