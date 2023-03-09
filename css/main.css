@@ -40,11 +40,24 @@ img {
     margin-bottom: 15px;
 }
 
-.product-image {
-    width: 80%;
+.img {
+    /*position: relative;*/
+}
+.van {
+    top: 45%;
+    left: 44%;
 }
 
-.product-image,
+.moveRight{
+    transform: translate(1350px,-420px) rotate(100deg) scale(-0);
+}
+
+.img {
+    /*position: absolute;*/
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out; /** Chrome & Safari **/
+}
+
 .product-info {
     margin-top: 10px;
     width: 50%;
@@ -71,6 +84,10 @@ button {
     height: 40px;
     width: 100px;
     font-size: 14px;
+}
+
+.butt-add{
+    /*background-color: red;*/
 }
 
 .disabledButton {

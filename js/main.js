@@ -8,12 +8,10 @@ Vue.component('product', {
         }
     },
 
-
-
     template: `
    <div class="product">
-        <div class="product-image">
-      <img :src="image" :alt="altText">
+        <div id="axis" class="one">
+            <img :src="image" :alt="altText" :class="{ moveRight:animate }" class="img van">
         </div>
 
     <div class="product-info">
@@ -53,10 +51,11 @@ Vue.component('product', {
 
       <div style="display: flex">
         <button
-                class="butt"
+                class="butt-add"
                 @click="addToCart"
                 :disabled="!inStock"
                 :class="{ disabledButton: !inStock }"
+                
         >
           Add
         </button>
@@ -68,23 +67,8 @@ Vue.component('product', {
         >
           Less</button>
       </div>
-<!--      <div>-->
-<!--      -->
-        <product-tabs :reviews="reviews"></product-tabs>
 
-        
-<!--            -->
-<!--            <h2>Reviews</h2>-->
-<!--            <p v-if="!reviews.length">There are no reviews yet.</p>-->
-<!--            <ul>-->
-<!--              <li v-for="review in reviews">-->
-<!--              <p>{{ review.name }}</p>-->
-<!--              <p>Rating: {{ review.rating }}</p>-->
-<!--              <p>{{ review.review }}</p>-->
-<!--              <p>{{ review.liking }}</p>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            </div>-->
+        <product-tabs :reviews="reviews"></product-tabs>
 
     </div>
    </div>
@@ -115,14 +99,26 @@ Vue.component('product', {
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             cart: 0,
-            reviews: []
+            reviews: [],
+            animate: false
         }
     },
     methods: {
+        animationImg(value) {
+            return this.animate = value
+        },
         addToCart() {
+            this.animationImg(true)
             if (this.cart < this.inventory) {
                 this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             }
+            console.log(this.animate)
+
+            setTimeout(() => {
+                console.log(this.animate)
+                this.animationImg(false)
+            }, 1000)
+
         },
         lessToCart() {
             if (this.cart < this.inventory) {
@@ -238,9 +234,9 @@ Vue.component('product-review', {
             errors: []
         }
     },
-    methods:{
+    methods: {
         onSubmit() {
-            if(this.name && this.review && this.rating) {
+            if (this.name && this.review && this.rating) {
                 let productReview = {
                     name: this.name,
                     review: this.review,
@@ -253,10 +249,10 @@ Vue.component('product-review', {
                 this.rating = null
                 this.liking = null
             } else {
-                if(!this.name) this.errors.push("Name required.")
-                if(!this.review) this.errors.push("Review required.")
-                if(!this.rating) this.errors.push("Rating required.")
-                if(!this.liking) this.errors.push("Not liked")
+                if (!this.name) this.errors.push("Name required.")
+                if (!this.review) this.errors.push("Review required.")
+                if (!this.rating) this.errors.push("Rating required.")
+                if (!this.liking) this.errors.push("Not liked")
             }
         }
 
@@ -302,8 +298,7 @@ Vue.component('product-tabs', {
             selectedTab: 'Reviews'  // устанавливается с помощью @click
         }
     },
-    methods: {
-    }
+    methods: {}
 })
 
 
