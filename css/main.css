@@ -18,9 +18,17 @@ body {
 
 img {
     border: 1px solid #d8d8d8;
-    width: 70%;
+    width: 90%;
     margin: 40px;
     box-shadow: 0px .5px 1px #d8d8d8;
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    position: absolute;
+}
+.one{
+    position: relative;
+    width: 50em;
+    height: 50em;
 }
 
 .variants{
@@ -40,22 +48,17 @@ img {
     margin-bottom: 15px;
 }
 
-.img {
-    /*position: relative;*/
-}
-.van {
-    top: 45%;
-    left: 44%;
+@keyframes moveRightAnimation  {
+    from {
+        transform: none;
+    }
+    to {
+        transform: translate(1350px, -420px) rotate(100deg) scale(-0);
+    }
 }
 
 .moveRight{
-    transform: translate(1350px,-420px) rotate(100deg) scale(-0);
-}
-
-.img {
-    /*position: absolute;*/
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 0.5s ease-in-out; /** Chrome & Safari **/
+    animation: moveRightAnimation ease-out 1s 1;
 }
 
 .product-info {
@@ -84,10 +87,6 @@ button {
     height: 40px;
     width: 100px;
     font-size: 14px;
-}
-
-.butt-add{
-    /*background-color: red;*/
 }
 
 .disabledButton {

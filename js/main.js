@@ -11,7 +11,13 @@ Vue.component('product', {
     template: `
    <div class="product">
         <div id="axis" class="one">
-            <img :src="image" :alt="altText" :class="{ moveRight:animate }" class="img van">
+            <img :src="image" :alt="altText" class="img van duplicate">
+            <img :src="image" 
+                 :alt="altText" 
+                 :class="{ moveRight:animate }"
+                 @animationend="animationEnd"
+                 id="img" 
+                 class="img van">
         </div>
 
     <div class="product-info">
@@ -55,7 +61,6 @@ Vue.component('product', {
                 @click="addToCart"
                 :disabled="!inStock"
                 :class="{ disabledButton: !inStock }"
-                
         >
           Add
         </button>
@@ -106,18 +111,15 @@ Vue.component('product', {
         animationImg(value) {
             return this.animate = value
         },
+        animationEnd(){
+            this.animationImg(false)
+        },
         addToCart() {
             this.animationImg(true)
             if (this.cart < this.inventory) {
                 this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             }
             console.log(this.animate)
-
-            setTimeout(() => {
-                console.log(this.animate)
-                this.animationImg(false)
-            }, 1000)
-
         },
         lessToCart() {
             if (this.cart < this.inventory) {
