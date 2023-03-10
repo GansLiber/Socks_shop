@@ -119,7 +119,6 @@ Vue.component('product', {
             if (this.cart < this.inventory) {
                 this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             }
-            console.log(this.animate)
         },
         lessToCart() {
             if (this.cart < this.inventory) {
@@ -160,6 +159,7 @@ Vue.component('product', {
     mounted() {
         eventBus.$on('review-submitted', productReview => {
             this.reviews.push(productReview)
+            console.log(this.reviews)
         })
     },
 })
@@ -197,24 +197,24 @@ Vue.component('product-review', {
 
  <p>
    <label for="rating">Rating:</label>
-   <select id="rating" v-model.number="rating">
-     <option>5</option>
-     <option>4</option>
-     <option>3</option>
-     <option>2</option>
-     <option>1</option>
+   <select id="rating" v-model.number="rating" @change="validateRec()">
+     <option value="5">5</option>
+     <option value="4">4</option>
+     <option value="3">3</option>
+     <option value="2">2</option>
+     <option value="1">1</option>
    </select>
  </p>
  
  <p>
     <label for="liking">Would you recommend this product?</label>
     <div style="float: left">
-        <label for="liking">yes</label>
-        <input v-model.number="liking" id="liking" type="radio" name="but" value="yes">
+        <label for="liking" >yes</label>
+        <input v-model.number="liking" :disabled="!validRec" id="liking" type="radio" name="but" value="yes">
     </div>
     <div style="float: left">
-        <label for="liking">no</label>
-        <input v-model.number="liking" id="liking" type="radio" name="but" value="no">
+        <label for="liking" :disabled="!validRec">no</label>
+        <input v-model.number="liking" :disabled="!validRec" id="liking" type="radio" name="but" value="no">
 </div>
 </p>
 
@@ -232,18 +232,41 @@ Vue.component('product-review', {
             review: null,
             rating: null,
             liking: null,
-            errors: []
+            errors: [],
+            validRec: false,
         }
     },
     methods: {
+        changeRec(){
+            //return this.validRec=true
+        },
+        validateRec(){
+            let val = document.getElementById("rating").value
+            console.log(val);
+            if (+val>3){
+                this.validRec=true
+                console.log(this.validRec)
+            } else {
+                this.validRec=false
+                console.log(this.validRec)
+            }
+        },
+        validateRecOff(){
+            this.validRec = false
+        },
+        validateRecOn(){
+            this.validRec = true
+        },
         onSubmit() {
             if (this.name && this.review && this.rating) {
+
                 let productReview = {
                     name: this.name,
                     review: this.review,
                     rating: this.rating,
                     liking: this.liking
                 }
+                console.log(this.rating)
                 eventBus.$emit('review-submitted', productReview)
                 this.name = null
                 this.review = null
@@ -284,6 +307,7 @@ Vue.component('product-tabs', {
            <p>{{ review.name }}</p>
            <p>Rating: {{ review.rating }}</p>
            <p>{{ review.review }}</p>
+           <p>{{ review.liking }}</p>
            </li>
          </ul>
        </div>
