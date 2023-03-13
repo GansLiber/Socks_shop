@@ -279,7 +279,6 @@ Vue.component('product-review', {
                 if (!this.liking) this.errors.push("Not liked")
             }
         }
-
     }
 })
 
